@@ -24,12 +24,12 @@ public class AuthServiceImpl implements AuthService {
         if (adminAccount.isEmpty()) {
             MainUser mainUser = new MainUser();
             mainUser.setEmail("admin@test.com");
-            mainUser.setUserName("admin");
-            mainUser.setPassword(new BCryptPasswordEncoder().encode("admin"));
+            mainUser.setMainUserName("admin");
             mainUser.setMainUserRole(MainUserRole.ADMIN);
+            mainUser.setPassword(new BCryptPasswordEncoder().encode("admin"));
             mainUserRepository.save(mainUser);
-            System.out.println("Admin account created:" + " " + mainUser.getEmail() +
-                    " " + mainUser.getPassword());
+            System.out.println("Admin account created. Email:" + " " + mainUser.getEmail() + " "
+                    + "password: " + mainUser.getPassword());
         }
         else {
             System.out.println("Admin account already exists");
@@ -43,10 +43,11 @@ public class AuthServiceImpl implements AuthService {
 
         MainUser mainUser = new MainUser();
         mainUser.setEmail(signupRequest.getEmail());
+        mainUser.setMainUserName(signupRequest.getName());
         mainUser.setMainUserRole(MainUserRole.CUSTOMER);
         mainUser.setPassword(new BCryptPasswordEncoder().encode(signupRequest.getPassword()));
-        MainUser savedMainUser = mainUserRepository.save(mainUser);
-        return savedMainUser.getMainUserDto();
+        MainUser createdMainUser = mainUserRepository.save(mainUser);
+        return createdMainUser.getMainUserDto();
 
     }
 

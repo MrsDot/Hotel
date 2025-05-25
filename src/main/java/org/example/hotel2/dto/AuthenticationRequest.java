@@ -3,9 +3,7 @@ package org.example.hotel2.dto;
 import lombok.Data;
 
 @Data
-public class SignupRequest {
+public class AuthenticationRequest {
     private String email;
-    private String name;
     private String password;
-
 }

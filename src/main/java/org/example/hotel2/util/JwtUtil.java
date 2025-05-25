@@ -17,10 +17,12 @@ import java.util.function.Function;
 @Component
 public class JwtUtil {
     private String generatedToken(Map<String, Object> extraClaims, UserDetails userDetails) {
-        return Jwts.builder().setClaims(extraClaims).setSubject(userDetails.getUsername())
+        return Jwts.builder()
+                .setClaims(extraClaims).setSubject(userDetails.getUsername())
                 .setIssuedAt(new Date(System.currentTimeMillis()))
                 .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 60 * 24))
-                .signWith(SignatureAlgorithm.HS256, getSigningKey()).compact();
+                .signWith(SignatureAlgorithm.HS256, getSigningKey())
+                .compact();
     }
 
     public String generateToken(UserDetails userDetails) {
@@ -54,7 +56,7 @@ public class JwtUtil {
     }
 
     private Key getSigningKey() {
-        byte[] keyBytes = Decoders.BASE64.decode("haslo123");
+        byte[] keyBytes = Decoders.BASE64.decode("45g56ikn45678kjnhg578ijh5434789olmkjhgfd34578765456789iuhgf56787654");
         return Keys.hmacShaKeyFor(keyBytes);
     }
 }

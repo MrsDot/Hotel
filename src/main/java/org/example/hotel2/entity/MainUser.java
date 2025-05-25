@@ -21,7 +21,7 @@ public class MainUser implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String userName;
+    private String mainUserName;
     private String email;
     private String password;
     private MainUserRole mainUserRole;
@@ -60,7 +60,7 @@ public class MainUser implements UserDetails {
         UserDto userDto = new UserDto();
         userDto.setId(id);
         userDto.setEmail(email);
-        userDto.setName(userName);
+        userDto.setName(mainUserName);
         userDto.setUserRole(mainUserRole);
 
         return userDto;
