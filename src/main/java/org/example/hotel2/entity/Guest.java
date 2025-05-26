@@ -1,4 +1,4 @@
-package org.example.hotel2.guest;
+package org.example.hotel2.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
