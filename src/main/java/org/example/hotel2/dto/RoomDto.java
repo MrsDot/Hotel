@@ -6,8 +6,8 @@ import lombok.Data;
 public class RoomDto {
     private Long id;
     private String name;
-    private Integer maxSpace;
-    private Double price;
+    private String type;
+    private Long price;
     private boolean isAvailable;
 
 }

@@ -1,4 +1,4 @@
-package org.example.hotel2.service;
+package org.example.hotel2.service.admin.room;
 
 import lombok.RequiredArgsConstructor;
 import org.example.hotel2.dto.RoomDto;
@@ -11,10 +11,13 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import java.util.stream.Collectors;
+
 @Service
 @RequiredArgsConstructor
 @RequestMapping("/api/admin")
 public class RoomServiceImpl implements RoomService {
+
     private final RoomRepository roomRepository;
 
     public boolean postRoom(RoomDto roomDto) {
@@ -23,20 +26,28 @@ public class RoomServiceImpl implements RoomService {
             Room room = new Room();
             room.setName(roomDto.getName());
             room.setPrice(roomDto.getPrice());
-            room.setMaxSpace(roomDto.getMaxSpace());
+            room.setType(roomDto.getType());
             room.setAvailable(true);
 
             roomRepository.save(room);
             return true;
+
         } catch (Exception e) {
             return false;
         }
     }
 
-//    public RoomResponseDto getAllRooms(int pageNumber) {
-//        Pageable pageable = PageRequest.of(pageNumber, 10);
-//        Page<Room> roomPage = roomRepository.findAll(pageable);
-//
-//    }
+    public RoomResponseDto getAllRooms(int pageNumber) {
+        Pageable pageable = PageRequest.of(pageNumber, 10);
+        Page<Room> roomPage = roomRepository.findAll(pageable);
+
+        RoomResponseDto roomResponseDto = new RoomResponseDto();
+        roomResponseDto.setPageNumber(roomPage.getPageable().getPageNumber());
+        roomResponseDto.setTotalPages(roomPage.getTotalPages());
+        roomResponseDto.setRoomDtoList(roomPage.stream().map(Room::getRoomDto).collect(Collectors.toList()));
+
+        return roomResponseDto;
+
+    }
 }
 
